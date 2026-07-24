@@ -1,0 +1,399 @@
+<title>Bears & Bliss in Estes Park, CO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --pine:#1F3B32;
+    --pine-light:#2F5245;
+    --stone:#E4E0D2;
+    --card:#FBF9F3;
+    --rust:#BC5A2C;
+    --rust-dark:#9A4720;
+    --lake:#33637A;
+    --ink:#26241F;
+    --ink-soft:#5B564C;
+    --line:#D3CCB8;
+    --radius:10px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--stone);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    font-size:16px;
+    line-height:1.5;
+  }
+  .wrap{max-width:980px;margin:0 auto;padding:0 20px 80px;}
+
+  /* Topo contour hero */
+  .hero{
+    position:relative;
+    background:var(--pine);
+    color:#EFE9D8;
+    padding:38px 20px 30px;
+    overflow:hidden;
+    border-bottom:6px solid var(--rust);
+  }
+  .hero-inner{max-width:980px;margin:0 auto;position:relative;z-index:2;}
+  .hero svg.contours{position:absolute;inset:0;width:100%;height:100%;opacity:0.16;z-index:1;}
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12.5px;
+    letter-spacing:0.08em;
+    color:#C9E0D3;
+    text-transform:uppercase;
+    margin-bottom:8px;
+  }
+  h1.title{
+    font-family:'Bitter',serif;
+    font-weight:800;
+    font-size:clamp(28px,5vw,42px);
+    margin:0 0 6px;
+    color:#F7F3E6;
+  }
+  .hero-sub{color:#CFE4D8;font-size:16px;max-width:560px;}
+
+  /* Nav */
+  nav.tabs{
+    position:sticky;top:0;z-index:20;
+    background:var(--pine-light);
+    display:flex;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    border-bottom:3px solid var(--rust-dark);
+  }
+  nav.tabs button{
+    flex:0 0 auto;
+    background:none;border:none;
+    color:#E4EEE6;
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:15px;
+    padding:14px 18px;
+    cursor:pointer;
+    white-space:nowrap;
+    border-bottom:4px solid transparent;
+    display:flex;align-items:center;gap:7px;
+  }
+  nav.tabs button:hover{background:rgba(255,255,255,0.06);}
+  nav.tabs button.active{
+    border-bottom:4px solid var(--rust);
+    background:rgba(255,255,255,0.08);
+    color:#fff;
+  }
+  nav.tabs button:focus-visible{outline:2px solid var(--rust);outline-offset:-2px;}
+
+  section.panel{display:none;padding-top:28px;}
+  section.panel.active{display:block;}
+
+  /* Sign-style section headers */
+  .sign{
+    background:#33291F;
+    color:#F4EDDD;
+    border-radius:6px;
+    padding:14px 18px;
+    display:inline-block;
+    margin-bottom:6px;
+    box-shadow:inset 0 0 0 2px #4A3A29, 0 2px 0 #1c1610;
+  }
+  .sign h2{
+    font-family:'Bitter',serif;
+    font-weight:700;
+    font-size:22px;
+    margin:0;
+    letter-spacing:0.01em;
+  }
+  .tag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11.5px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin:10px 0 20px;
+  }
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:18px 20px;
+    margin-bottom:16px;
+  }
+  .card h3{font-family:'Bitter',serif;font-size:17px;margin:0 0 8px;color:var(--pine);}
+  .muted{color:var(--ink-soft);font-size:14.5px;}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media(max-width:640px){.grid2{grid-template-columns:1fr;}}
+
+  /* buttons/inputs */
+  button.btn{
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:15px;
+    background:var(--rust);
+    color:#fff;
+    border:none;
+    border-radius:8px;
+    padding:11px 16px;
+    cursor:pointer;
+  }
+  button.btn:hover{background:var(--rust-dark);}
+  button.btn.secondary{background:transparent;color:var(--pine);border:1.5px solid var(--pine);}
+  button.btn.secondary:hover{background:rgba(31,59,50,0.06);}
+  button.btn.small{padding:7px 11px;font-size:13.5px;border-radius:6px;}
+  button.icon-btn{background:none;border:none;cursor:pointer;font-size:16px;color:var(--ink-soft);}
+  button.icon-btn:hover{color:var(--rust-dark);}
+
+  input[type=text], input[type=date], input[type=time], input[type=number], textarea{
+    font-family:'Inter',sans-serif;
+    font-size:15px;
+    padding:9px 11px;
+    border:1.5px solid var(--line);
+    border-radius:7px;
+    background:#fff;
+    color:var(--ink);
+    width:100%;
+  }
+  input:focus, textarea:focus, button:focus-visible{outline:2px solid var(--lake);outline-offset:1px;}
+  label{font-size:13px;font-weight:600;color:var(--ink-soft);display:block;margin-bottom:4px;}
+
+  table{width:100%;border-collapse:collapse;}
+  th{
+    text-align:left;font-family:'JetBrains Mono',monospace;font-size:11.5px;
+    text-transform:uppercase;letter-spacing:0.05em;color:var(--ink-soft);
+    padding:8px 10px;border-bottom:2px solid var(--line);
+  }
+  td{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top;}
+  td textarea{min-height:38px;resize:vertical;}
+
+  .elev-tag{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.03em;
+    background:var(--lake);
+    color:#fff;
+    padding:2px 7px;
+    border-radius:4px;
+    margin-left:8px;
+    vertical-align:middle;
+  }
+
+  .empty-state{
+    border:2px dashed var(--line);
+    border-radius:var(--radius);
+    padding:26px;
+    text-align:center;
+    color:var(--ink-soft);
+  }
+
+  .add-row-form{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;margin-top:10px;}
+  .add-row-form > div{flex:1;min-width:130px;}
+
+  .loading{padding:40px 0;text-align:center;color:var(--ink-soft);font-family:'JetBrains Mono',monospace;font-size:13px;}
+  .save-note{font-size:12.5px;color:var(--ink-soft);font-family:'JetBrains Mono',monospace;margin-top:4px;height:16px;}
+
+  ul.plain{list-style:none;padding:0;margin:0;}
+  ul.plain li{padding:10px 0;border-bottom:1px solid var(--line);}
+  ul.plain li:last-child{border-bottom:none;}
+
+  a.link{color:var(--lake);font-weight:600;}
+</style>
+
+<div class="hero">
+  <svg class="contours" viewBox="0 0 900 220" preserveAspectRatio="none">
+    <path d="M0,150 Q150,90 300,140 T600,120 T900,150" fill="none" stroke="#EFE9D8" stroke-width="2"/>
+    <path d="M0,170 Q150,115 300,165 T600,145 T900,175" fill="none" stroke="#EFE9D8" stroke-width="2"/>
+    <path d="M0,190 Q150,140 300,185 T600,170 T900,195" fill="none" stroke="#EFE9D8" stroke-width="2"/>
+    <path d="M0,60 Q200,10 400,55 T900,40" fill="none" stroke="#EFE9D8" stroke-width="1.5"/>
+    <path d="M0,80 Q200,35 400,78 T900,65" fill="none" stroke="#EFE9D8" stroke-width="1.5"/>
+  </svg>
+  <div class="hero-inner">
+    <div class="eyebrow">Elev. 7,522 ft &middot; Estes Park, Colorado</div>
+    <h1 class="title">Bears & Bliss in Estes Park, CO</h1>
+    <div class="hero-sub">August 10&ndash;15, 2026 &middot; one page for the whole family &mdash; dates, travel plans, meals, things to do, music, photos, and the talent show.</div>
+  </div>
+</div>
+
+<nav class="tabs" id="tabs">
+  <button data-tab="overview" class="active">🏔️ Overview</button>
+  <button data-tab="travel">🚗 Travel &amp; Stay</button>
+  <button data-tab="meals">🍽️ Meal Plan</button>
+  <button data-tab="activities">🥾 Things to Do</button>
+  <button data-tab="music">🎵 Music</button>
+  <button data-tab="photos">📷 Photos</button>
+  <button data-tab="talent">🎤 Talent Show</button>
+  <button data-tab="singalong">🔥 Sing Along</button>
+</nav>
+
+<div class="wrap">
+
+  <!-- OVERVIEW -->
+  <section class="panel active" id="panel-overview">
+    <div class="sign"><h2>The Basics</h2></div>
+    <div class="tag">Everything you need to know before you pack</div>
+
+    <div class="grid2">
+      <div class="card">
+        <h3>When</h3>
+        <p>Monday, August 10 &ndash; Saturday, August 15, 2026</p>
+        <p class="muted">Arrive any time on the 10th; plan to head out on the 15th. Add your own exact times on the <b>Travel &amp; Stay</b> tab.</p>
+      </div>
+      <div class="card">
+        <h3>Where</h3>
+        <p>Estes Park, Colorado &mdash; gateway town to Rocky Mountain National Park.</p>
+        <p class="muted">
+          <b>Aug 10 &ndash; morning of Aug 12:</b> <a class="link" href="https://www.stanleyhotel.com/" target="_blank" rel="noopener">The Stanley Hotel</a><br>
+          <b>Aug 12 &ndash; Aug 15:</b> <a class="link" href="http://www.estesparkfallriverlodge.com/" target="_blank" rel="noopener">Estes Park Fall River Lodge</a>
+        </p>
+      </div>
+      <div class="card">
+        <h3>Weather &amp; packing</h3>
+        <p class="muted">August afternoons in the mountains bring quick thunderstorms and it's noticeably cooler at altitude than back home. Layers, a rain jacket, sturdy shoes, and sun protection all earn their space in the suitcase.</p>
+      </div>
+      <div class="card">
+        <h3>National Park heads up</h3>
+        <p class="muted">Rocky Mountain National Park requires a <b>timed entry reservation</b> to get in from 9am&ndash;2pm through mid-October. Reservations for August are already open on Recreation.gov &mdash; the sooner someone books, the better the odds. See the <b>Things to Do</b> tab for details.</p>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:4px;">
+      <h3>How this page works</h3>
+      <p class="muted">This is a shared page &mdash; anyone with the link can view it, and the sections below marked "editable" can be updated by anyone too, so it's easy for each family to add their own travel info, favorite songs, or a meal they want to bring. Just be kind and don't erase someone else's entry by accident.</p>
+    </div>
+  </section>
+
+  <!-- TRAVEL -->
+  <section class="panel" id="panel-travel">
+    <div class="sign"><h2>Travel &amp; Stay</h2></div>
+    <div class="tag">Editable in Google Sheets &mdash; no login needed</div>
+
+    <div class="card" style="text-align:center;padding:28px 20px;">
+      <p class="muted" style="max-width:460px;margin:0 auto 14px;">Add your family's arrival and departure info directly &mdash; anyone with the link can edit, no account needed.</p>
+      <a class="btn" style="display:inline-block;text-decoration:none;" href="https://docs.google.com/spreadsheets/d/1jAbMxngihT8wM-o9cmB28B914gGTshI8pnqFExx0EzM/edit?usp=sharing" target="_blank" rel="noopener">🚗 Open Travel &amp; Stay sheet</a>
+    </div>
+  </section>
+
+  <!-- MEALS -->
+  <section class="panel" id="panel-meals">
+    <div class="sign"><h2>Meal Plan</h2></div>
+    <div class="tag">Editable in Google Sheets &mdash; no login needed</div>
+
+    <div class="card" style="text-align:center;padding:36px 20px;">
+      <h3 style="margin-bottom:4px;">The meal plan lives in a shared spreadsheet</h3>
+      <p class="muted" style="max-width:420px;margin:0 auto 18px;">Sign up for a meal, note what you're bringing, or claim clean-up duty &mdash; anyone with the link can edit it directly, no Claude or Google account needed to view.</p>
+      <a class="btn" style="display:inline-block;text-decoration:none;" href="https://docs.google.com/spreadsheets/d/1SFmPnrZQQ5HJPIZiYgZjpyBD4FVtPcu12MwGo_lfPbk/edit?usp=sharing" target="_blank" rel="noopener">🍽️ Open the meal plan</a>
+    </div>
+  </section>
+
+  <!-- ACTIVITIES -->
+  <section class="panel" id="panel-activities">
+    <div class="sign"><h2>Things to Do</h2></div>
+    <div class="tag">Suggestions &mdash; not editable, just for planning</div>
+
+    <div class="card">
+      <h3>Book ahead: Rocky Mountain National Park <span class="elev-tag">Timed Entry Required</span></h3>
+      <p class="muted">A timed entry reservation is required to enter the park between 9am and 2pm (you can enter before 9am without one). Reservations are booked on Recreation.gov, not at the gate, and August dates are already released &mdash; last-minute spots also open at 7pm the night before if you miss the initial booking window. Worth grabbing these early since they sell out.</p>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <h3>In the park</h3>
+        <ul class="plain">
+          <li><b>Trail Ridge Road</b><span class="elev-tag">12,183 ft</span><br><span class="muted">The highest continuous paved highway in the U.S. &mdash; incredible views, worth a drive even without getting out much.</span></li>
+          <li><b>Bear Lake</b><br><span class="muted">Easy, scenic loop trail around the lake. Needs its own separate Bear Lake Road permit in addition to park entry.</span></li>
+          <li><b>Sprague Lake</b><br><span class="muted">Flat, easy, wheelchair/stroller-friendly loop &mdash; a good option for a relaxed morning.</span></li>
+          <li><b>Alberta Falls</b><br><span class="muted">A short, popular hike to a waterfall, good for most fitness levels.</span></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>In town</h3>
+        <ul class="plain">
+          <li><b>Estes Park Riverwalk</b><br><span class="muted">Shops, ice cream, and taffy along the river &mdash; easy, low-key evening activity.</span></li>
+          <li><b>The Stanley Hotel</b><br><span class="muted">Historic hotel known as the inspiration for "The Shining" &mdash; offers walking tours.</span></li>
+          <li><b>Lake Estes</b><br><span class="muted">Paved path around the lake, plus paddleboat and kayak rentals at the marina.</span></li>
+          <li><b>Mini golf &amp; go-karts</b><br><span class="muted">A few family fun centers around town &mdash; good backup for a rainy afternoon.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>A little more adventurous</h3>
+      <p class="muted">Horseback rides through nearby stables, fly fishing on the Big Thompson River, and whitewater rafting trips are all offered by outfitters in the area if anyone wants to book something extra.</p>
+    </div>
+  </section>
+
+  <!-- MUSIC -->
+  <section class="panel" id="panel-music">
+    <div class="sign"><h2>Music</h2></div>
+    <div class="tag">Editable in Google Sheets &mdash; no login needed</div>
+
+    <div class="card">
+      <h3>A few to start the playlist</h3>
+      <p class="muted">John Denver &ndash; "Rocky Mountain High" &middot; John Denver &ndash; "Take Me Home, Country Roads" &middot; anything good for a road trip or a porch evening</p>
+    </div>
+
+    <div class="card" style="text-align:center;padding:28px 20px;">
+      <p class="muted" style="max-width:460px;margin:0 auto 14px;">Add your own picks to the trip playlist &mdash; anyone with the link can edit, no account needed.</p>
+      <a class="btn" style="display:inline-block;text-decoration:none;" href="https://docs.google.com/spreadsheets/d/1mapE-EAyeY68oeUBaJDfzCh8FwiQ3s-PDe1yep-Iyu4/edit?usp=sharing" target="_blank" rel="noopener">🎵 Open Music sheet</a>
+    </div>
+  </section>
+
+  <!-- PHOTOS -->
+  <section class="panel" id="panel-photos">
+    <div class="sign"><h2>Photos</h2></div>
+    <div class="tag">Shared album</div>
+
+    <div class="card" style="text-align:center;padding:36px 20px;">
+      <h3 style="margin-bottom:4px;">Bears &amp; Bliss &mdash; the shared album</h3>
+      <p class="muted" style="max-width:420px;margin:0 auto 18px;">Add your trip photos here, and everyone else's show up too. Tap below to open it in Google Photos.</p>
+      <a class="btn" style="display:inline-block;text-decoration:none;" href="https://photos.app.goo.gl/aK6Pym5dkKZTW69A6" target="_blank" rel="noopener">📷 Open the shared album</a>
+    </div>
+  </section>
+
+  <!-- TALENT SHOW -->
+  <section class="panel" id="panel-talent">
+    <div class="sign"><h2>Talent Show</h2></div>
+    <div class="tag">Editable in Google Sheets &mdash; no login needed</div>
+
+    <div class="card">
+      <h3>The details</h3>
+      <p class="muted">Date, time, and location: <em>add here once decided</em>. All ages and all skill levels welcome &mdash; songs, jokes, magic tricks, whatever you've got.</p>
+    </div>
+
+    <div class="card" style="text-align:center;padding:28px 20px;">
+      <p class="muted" style="max-width:460px;margin:0 auto 14px;">Sign up your act directly &mdash; anyone with the link can edit, no account needed.</p>
+      <a class="btn" style="display:inline-block;text-decoration:none;" href="https://docs.google.com/spreadsheets/d/160zUJvNbXWr3FFC9LbDYjCRmB5NQIKep3wUcdjnKG2c/edit?usp=sharing" target="_blank" rel="noopener">🎤 Open Talent Show sheet</a>
+    </div>
+  </section>
+
+  <!-- SING ALONG -->
+  <section class="panel" id="panel-singalong">
+    <div class="sign"><h2>Campfire Sing Along</h2></div>
+    <div class="tag">Editable in Google Sheets &mdash; no login needed</div>
+
+    <div class="card">
+      <h3>How this works</h3>
+      <p class="muted">Add the songs you want to sing around the campfire, along with the lyrics, so everyone can follow along on the night. If you add a song here, drop it in the <b>Music</b> tab's playlist too &mdash; that way the family can start learning it before the trip.</p>
+    </div>
+
+    <div class="card" style="text-align:center;padding:28px 20px;">
+      <p class="muted" style="max-width:460px;margin:0 auto 14px;">Add a song and its lyrics directly &mdash; anyone with the link can edit, no account needed.</p>
+      <a class="btn" style="display:inline-block;text-decoration:none;" href="https://docs.google.com/spreadsheets/d/1qdcPnpdgZd3rY4E9ZVgxdRFUbDah1HXr-cdS8qnLTVI/edit?usp=sharing" target="_blank" rel="noopener">🔥 Open Sing Along sheet</a>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  document.getElementById('tabs').addEventListener('click', (e) => {
+    const btn = e.target.closest('button[data-tab]');
+    if (!btn) return;
+    document.querySelectorAll('nav.tabs button').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('section.panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+  });
+</script>
