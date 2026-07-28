@@ -241,6 +241,26 @@
   }
   .login-sub{margin:0 0 16px;color:var(--ink-soft);font-size:14px;}
   .login-fields{display:grid;gap:10px;}
+  .remember-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-top:12px;
+    color:var(--ink-soft);
+    font-size:13.5px;
+  }
+  .remember-row input[type=checkbox]{
+    width:16px;
+    height:16px;
+    accent-color:var(--pine);
+  }
+  .remember-row label{
+    margin:0;
+    font-size:13.5px;
+    font-weight:500;
+    color:var(--ink-soft);
+    cursor:pointer;
+  }
   .login-error{min-height:20px;margin-top:10px;font-size:13px;color:#B5322B;font-weight:600;}
 
   #siteContent{display:none;}
@@ -281,6 +301,7 @@
     .login-title{font-size:30px;line-height:1.05;}
     .login-sub{font-size:16px;line-height:1.35;margin-bottom:12px;}
     .login-error{font-size:14px;}
+    .remember-row, .remember-row label{font-size:15px;}
     label{font-size:15px;}
     input[type=text], input[type=password]{
       font-size:16px;
@@ -332,6 +353,10 @@
           <label for="passwordInput">Password</label>
           <input id="passwordInput" name="password" type="password" required>
         </div>
+      </div>
+      <div class="remember-row">
+        <input id="rememberMeInput" name="rememberMe" type="checkbox" checked>
+        <label for="rememberMeInput">Remember me on this device</label>
       </div>
       <button type="submit" class="btn" style="margin-top:14px;width:100%;">Sign in</button>
       <div id="loginError" class="login-error" aria-live="polite"></div>
@@ -485,7 +510,8 @@
 </div>
 
 <script>
-  const AUTH_KEY = 'bearsandbliss-auth';
+  const AUTH_SESSION_KEY = 'bearsandbliss-auth-session';
+  const AUTH_PERSISTENT_KEY = 'bearsandbliss-auth-persistent';
   const USERNAME = 'bearsandbliss';
   const PASSWORD = 'penelopepoops';
 
@@ -495,6 +521,7 @@
   const siteContent = document.getElementById('siteContent');
   const usernameInput = document.getElementById('usernameInput');
   const passwordInput = document.getElementById('passwordInput');
+  const rememberMeInput = document.getElementById('rememberMeInput');
 
   function unlockSite() {
     document.documentElement.classList.remove('locked');
@@ -506,7 +533,10 @@
   document.documentElement.classList.add('locked');
   document.body.classList.add('locked');
 
-  if (sessionStorage.getItem(AUTH_KEY) === 'ok') {
+  const hasSessionAuth = sessionStorage.getItem(AUTH_SESSION_KEY) === 'ok';
+  const hasPersistentAuth = localStorage.getItem(AUTH_PERSISTENT_KEY) === 'ok';
+
+  if (hasPersistentAuth || hasSessionAuth) {
     unlockSite();
   } else {
     usernameInput.focus();
@@ -519,7 +549,13 @@
     const isValidPass = passwordInput.value === PASSWORD;
 
     if (isValidUser && isValidPass) {
-      sessionStorage.setItem(AUTH_KEY, 'ok');
+      if (rememberMeInput.checked) {
+        localStorage.setItem(AUTH_PERSISTENT_KEY, 'ok');
+        sessionStorage.removeItem(AUTH_SESSION_KEY);
+      } else {
+        sessionStorage.setItem(AUTH_SESSION_KEY, 'ok');
+        localStorage.removeItem(AUTH_PERSISTENT_KEY);
+      }
       loginError.textContent = '';
       unlockSite();
       return;
